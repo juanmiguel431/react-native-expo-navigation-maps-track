@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { AccountScreen, SigninScreen, SignupScreen, TrackCreateScreen, TrackDetailScreen } from './src/screens';
 
 export default function App() {
   return (

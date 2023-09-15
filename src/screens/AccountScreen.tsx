@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const AccountScreen: React.FC = () => {
+export const AccountScreen: React.FC = () => {
   return (
     <View>
       <Text style={{ fontSize: 48 }} >AccountScreen</Text>
