@@ -50,11 +50,11 @@ const LoginFlow = () => {
 };
 
 const AppContainer: React.FC = () => {
-  const { state: { isLoggedIn } } = useContext(TrackContext);
+  const { state: { isSignedIn } } = useContext(TrackContext);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={SCREEN.LoginFlow} screenOptions={{ headerShown: false }}>
-        {isLoggedIn ? (
+        {isSignedIn ? (
           <Stack.Screen name={SCREEN.MainFlow} component={MainFlow}/>
         ) : (
           <Stack.Screen name={SCREEN.LoginFlow} component={LoginFlow}/>
