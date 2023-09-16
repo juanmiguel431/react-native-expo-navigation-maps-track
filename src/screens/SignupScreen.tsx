@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Input, Text } from '@rneui/themed';
-import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Spacer from '../components/Spacer';
 import { SCREEN, SignupScreenProps } from '../models/screen';
 import { AuthContext } from '../context/AuthContext';
@@ -10,7 +10,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { signUp } = useContext(AuthContext);
+  const { state, signUp } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
@@ -50,6 +50,11 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
           />
         }
       />
+      {state.errorMessage &&
+        <Text style={styles.errorMessage}>
+          {state.errorMessage}
+        </Text>
+      }
       <Spacer>
         <Button
           type="clear"
@@ -75,6 +80,12 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 20
+  },
+  errorMessage: {
+    fontSize: 16,
+    color: 'red',
+    marginLeft: 15,
+    marginTop: 15
   }
 });
 
