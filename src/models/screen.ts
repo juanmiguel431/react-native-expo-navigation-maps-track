@@ -1,21 +1,40 @@
 import { NativeStackScreenProps, NativeStackNavigationProp  } from 'react-native-screens/native-stack';
 import type { RouteProp } from '@react-navigation/native';
 
-export const SCREEN = {
-  Index: 'Index',
-  Show: 'Show',
-  Create: 'Create',
-  Edit: 'Edit',
-} as const;
+// export const SCREEN = {
+//   Account: 'Account',
+//   Signin: 'Signin',
+//   Signup: 'Signup',
+//   TrackCreate: 'TrackCreate',
+//   TrackDetail: 'TrackDetail',
+// } as const;
+
+export const enum SCREEN {
+  Account = 'Account',
+  Signin = 'Signin',
+  Signup = 'Signup',
+  TrackCreate = 'TrackCreate',
+  TrackDetail = 'TrackDetail',
+  TrackList = 'TrackList',
+  Tracks = 'Tracks',
+}
+
+type Screen = ObjectValues<typeof SCREEN>;
 
 export type RootStackParamList = {
-  [SCREEN.Index]: undefined;
-  [SCREEN.Show]: { id: string };
-  [SCREEN.Create]: undefined;
-  [SCREEN.Edit]: { id: string };
+  [SCREEN.Account]: undefined;
+  [SCREEN.Signin]: undefined;
+  [SCREEN.Signup]: undefined;
+  [SCREEN.TrackCreate]: undefined;
+  [SCREEN.TrackDetail]: undefined;
+  [SCREEN.TrackList]: undefined;
+  [SCREEN.Tracks]: undefined;
 };
 
-export type IndexScreenProps = NativeStackScreenProps<RootStackParamList, 'Index'>;
-export type ShowScreenProps = NativeStackScreenProps<RootStackParamList, 'Show'>;
-export type CreateScreenProps = NativeStackScreenProps<RootStackParamList, 'Create'>;
-export type EditScreenProps = NativeStackScreenProps<RootStackParamList, 'Edit'>;
+export type AccountScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Account>;
+export type SigninScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Signin>;
+export type SignupScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Signup>;
+export type TrackCreateScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.TrackCreate>;
+export type TrackDetailScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.TrackDetail>;
+export type TrackListScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.TrackList>;
+export type TracksScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Tracks>;
