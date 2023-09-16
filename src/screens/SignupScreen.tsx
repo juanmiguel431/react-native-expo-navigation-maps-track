@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Input, Text } from '@rneui/themed';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import Spacer from '../components/Spacer';
 import { SCREEN, SignupScreenProps } from '../models/screen';
+import { AuthContext } from '../context/AuthContext';
 
 export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { signUp } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
@@ -51,6 +54,9 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
         <Button
           type="clear"
           title="Sign Up"
+          onPress={() => {
+            signUp({ email: email, password: password });
+          }}
         />
       </Spacer>
     </View>
