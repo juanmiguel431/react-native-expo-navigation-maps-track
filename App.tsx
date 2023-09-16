@@ -64,8 +64,6 @@ const AppContainer: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({});
-
 const App: React.FC = () => {
   return (
     <TrackProvider>
@@ -73,5 +71,7 @@ const App: React.FC = () => {
     </TrackProvider>
   );
 };
+
+const styles = StyleSheet.create({});
 
 export default App;
