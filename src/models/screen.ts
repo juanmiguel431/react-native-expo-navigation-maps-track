@@ -17,6 +17,8 @@ export const enum SCREEN {
   TrackDetail = 'TrackDetail',
   TrackList = 'TrackList',
   Tracks = 'Tracks',
+  IsLoggedIn = 'IsLoggedIn',
+  IsLoggedOut = 'IsLoggedOut',
 }
 
 type Screen = ObjectValues<typeof SCREEN>;
@@ -29,6 +31,8 @@ export type RootStackParamList = {
   [SCREEN.TrackDetail]: undefined;
   [SCREEN.TrackList]: undefined;
   [SCREEN.Tracks]: undefined;
+  [SCREEN.IsLoggedIn]: undefined;
+  [SCREEN.IsLoggedOut]: undefined;
 };
 
 export type AccountScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Account>;
@@ -38,3 +42,5 @@ export type TrackCreateScreenProps = NativeStackScreenProps<RootStackParamList, 
 export type TrackDetailScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.TrackDetail>;
 export type TrackListScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.TrackList>;
 export type TracksScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Tracks>;
+export type IsLoggedInScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.IsLoggedIn>;
+export type IsLoggedOutScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.IsLoggedOut>;
