@@ -19,13 +19,13 @@ const trackReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   }
 }
 
-const signIn = (dispatch: React.Dispatch<ReducerAction>) => {
+const signIn = (dispatch: Dispatch<ReducerAction>) => {
   return () => {
     dispatch({ type: TRACK_ACTION_TYPE.SingIn })
   }
 };
 
-const signOut = (dispatch: React.Dispatch<ReducerAction>) => {
+const signOut = (dispatch: Dispatch<ReducerAction>) => {
   return async () => {
     dispatch({ type: TRACK_ACTION_TYPE.SingOut })
   }
