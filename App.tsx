@@ -13,11 +13,13 @@ import {
 import { RootStackParamList, SCREEN } from './src/models/screen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import { TrackContext, TrackProvider } from './src/context/TrackContext';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const Tab = createBottomTabNavigator();
+// const Tab = createMaterialBottomTabNavigator();
 
 const TrackComp = () => {
   return (
@@ -28,7 +30,7 @@ const TrackComp = () => {
   );
 }
 
-const IsLoggedIn = () => {
+const MainFlow = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen name={SCREEN.Account} component={AccountScreen}/>
@@ -38,7 +40,7 @@ const IsLoggedIn = () => {
   )
 };
 
-const IsLoggedOut = () => {
+const LoginFlow = () => {
   return (
     <Stack.Navigator initialRouteName={SCREEN.Signin}>
       <Stack.Screen name={SCREEN.Signup} component={SignupScreen} options={{ title: 'Signup' }}/>
@@ -51,11 +53,11 @@ const AppContainer: React.FC = () => {
   const { state: { isLoggedIn } } = useContext(TrackContext);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={SCREEN.IsLoggedOut} screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName={SCREEN.LoginFlow} screenOptions={{ headerShown: false }}>
         {isLoggedIn ? (
-          <Stack.Screen name={SCREEN.IsLoggedIn} component={IsLoggedIn}/>
+          <Stack.Screen name={SCREEN.MainFlow} component={MainFlow}/>
         ) : (
-          <Stack.Screen name={SCREEN.IsLoggedOut} component={IsLoggedOut}/>
+          <Stack.Screen name={SCREEN.LoginFlow} component={LoginFlow}/>
         )}
       </Stack.Navigator>
     </NavigationContainer>
