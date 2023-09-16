@@ -8,7 +8,7 @@ type ReducerAction = SignInAction | SignOutAction;
 type SignInAction = { type: TRACK_ACTION_TYPE.SingIn };
 type SignOutAction = { type: TRACK_ACTION_TYPE.SingOut };
 
-const trackReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
+const authReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   switch (action.type) {
     case TRACK_ACTION_TYPE.SingIn:
       return { ...state, isSignedIn: true };
@@ -36,6 +36,6 @@ const actions = {
 };
 
 export const {
-  Context: TrackContext ,
-  Provider: TrackProvider
-} = createDataContext(trackReducer, actions, { isSignedIn: false });
+  Context: AuthContext ,
+  Provider: AuthProvider
+} = createDataContext(authReducer, actions, { isSignedIn: false });

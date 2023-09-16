@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { SCREEN, SigninScreenProps } from '../models/screen';
-import { TrackContext } from '../context/TrackContext';
+import { AuthContext } from '../context/AuthContext';
 
 export const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
-  const { signIn } = useContext(TrackContext);
+  const { signIn } = useContext(AuthContext);
   return (
     <View>
       <Text style={{ fontSize: 48 }}>SigninScreen</Text>

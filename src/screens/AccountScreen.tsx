@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import { TrackContext } from '../context/TrackContext';
+import { AuthContext } from '../context/AuthContext';
 
 export const AccountScreen: React.FC = () => {
-  const { signOut } = useContext(TrackContext);
+  const { signOut } = useContext(AuthContext);
   return (
     <View>
       <Text style={{ fontSize: 48 }} >AccountScreen</Text>

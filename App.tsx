@@ -2,6 +2,9 @@ import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import {
   AccountScreen,
   SigninScreen,
@@ -11,10 +14,7 @@ import {
   TrackListScreen
 } from './src/screens';
 import { RootStackParamList, SCREEN } from './src/models/screen';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
-import { TrackContext, TrackProvider } from './src/context/TrackContext';
+import { AuthContext, AuthProvider } from './src/context/AuthContext';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -50,7 +50,7 @@ const LoginFlow = () => {
 };
 
 const AppContainer: React.FC = () => {
-  const { state: { isSignedIn } } = useContext(TrackContext);
+  const { state: { isSignedIn } } = useContext(AuthContext);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={SCREEN.LoginFlow} screenOptions={{ headerShown: false }}>
@@ -66,9 +66,9 @@ const AppContainer: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <TrackProvider>
+    <AuthProvider>
       <AppContainer/>
-    </TrackProvider>
+    </AuthProvider>
   );
 };
 
