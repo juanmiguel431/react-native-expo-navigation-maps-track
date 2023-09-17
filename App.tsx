@@ -20,10 +20,10 @@ import { navigationRef } from './src/RootNavigation';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootStackParamList>();
 // const Tab = createMaterialBottomTabNavigator();
 
-const TrackComp = () => {
+const TrackComp: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName={SCREEN.TrackList}>
       <Stack.Screen name={SCREEN.TrackList} component={TrackListScreen} options={{ title: 'Track List' }}/>
@@ -32,7 +32,7 @@ const TrackComp = () => {
   );
 }
 
-const MainFlow = () => {
+const MainFlow: React.FC = () => {
   return (
     <Tab.Navigator initialRouteName={SCREEN.Tracks}>
       <Tab.Screen name={SCREEN.Tracks} component={TrackComp} options={{ headerShown: false }}/>
@@ -42,7 +42,7 @@ const MainFlow = () => {
   )
 };
 
-const LoginFlow = () => {
+const LoginFlow: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName={SCREEN.Signup}>
       <Stack.Screen name={SCREEN.Signup} component={SignupScreen} options={{ headerShown: false }}/>
