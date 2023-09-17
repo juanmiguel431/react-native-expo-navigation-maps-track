@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Spacer from './Spacer';
 import { Button, Input, Text } from '@rneui/themed';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -16,7 +16,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ header, submit, errorMessage
   const [password, setPassword] = useState('');
 
   return (
-    <View style={styles.container}>
+    <>
       <Spacer>
         <Text h3>{header}</Text>
       </Spacer>
@@ -67,20 +67,11 @@ export const AuthForm: React.FC<AuthFormProps> = ({ header, submit, errorMessage
           }}
         />
       </Spacer>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    // borderColor: 'red',
-    // borderWidth: 10,
-    marginTop: 150,
-
-    // flex: 0.7, //This cause an issue in Android which makes the keyboard move to the top the whole content.
-    // justifyContent: 'center',
-    // marginBottom: 250
-  },
   icon: {
     fontSize: 20
   },
