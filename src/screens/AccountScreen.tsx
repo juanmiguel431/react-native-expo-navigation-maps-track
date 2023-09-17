@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthContext } from '../context/AuthContext';
 import { Button } from '@rneui/themed';
 import Spacer from '../components/Spacer';
@@ -8,12 +9,12 @@ import { AccountScreenProps } from '../models/screen';
 export const AccountScreen: React.FC<AccountScreenProps> = () => {
   const { state, signOut } = useContext(AuthContext);
   return (
-    <View>
+    <SafeAreaView >
       <Text style={styles.user} >{state.user?.email}</Text>
       <Spacer>
         <Button title="Sign Out" onPress={signOut} />
       </Spacer>
-    </View>
+    </SafeAreaView>
   );
 }
 
