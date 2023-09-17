@@ -33,10 +33,10 @@ const TrackComp = () => {
 
 const MainFlow = () => {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name={SCREEN.Account} component={AccountScreen}/>
-      <Tab.Screen name={SCREEN.TrackCreate} component={TrackCreateScreen}/>
+    <Tab.Navigator initialRouteName={SCREEN.Tracks}>
       <Tab.Screen name={SCREEN.Tracks} component={TrackComp} options={{ headerShown: false }}/>
+      <Tab.Screen name={SCREEN.TrackCreate} component={TrackCreateScreen}/>
+      <Tab.Screen name={SCREEN.Account} component={AccountScreen}/>
     </Tab.Navigator>
   )
 };
