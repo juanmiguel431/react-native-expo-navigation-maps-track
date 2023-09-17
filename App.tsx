@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
@@ -51,7 +51,12 @@ const LoginFlow = () => {
 };
 
 const AppContainer: React.FC = () => {
-  const { state: { isSignedIn } } = useContext(AuthContext);
+  const { state: { isSignedIn }, tryLocalSignIn } = useContext(AuthContext);
+
+  useEffect(() => {
+    tryLocalSignIn();
+  }, [tryLocalSignIn]);
+
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator initialRouteName={SCREEN.LoginFlow} screenOptions={{ headerShown: false }}>

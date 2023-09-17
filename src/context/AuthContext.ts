@@ -1,10 +1,10 @@
-import React, { Reducer, Dispatch } from 'react';
+import { Reducer, Dispatch } from 'react';
 import createDataContext from './createDataContext';
 import { TRACK_ACTION_TYPE } from '../models/actions';
 import { SignInResponse, SignUpResponse, User } from '../models/login';
 import trackerApi from '../apis/trackerApi';
 import { AxiosError } from 'axios';
-import { deleteItemAsync, setItemAsync } from '../apis/secureStorage';
+import { deleteItemAsync, getItemAsync, setItemAsync } from '../apis/secureStorage';
 import * as RootNavigation from '../RootNavigation';
 import { SCREEN } from '../models/screen';
 import { deviceStorage } from '../models/device-storage';
@@ -102,7 +102,7 @@ const signUp = (dispatch: Dispatch<ReducerAction>) => async (user: User) => {
 };
 
 const signOut = (dispatch: Dispatch<ReducerAction>) => async () => {
-  await deleteItemAsync('token');
+  await deleteItemAsync(deviceStorage.Token);
   dispatch({ type: TRACK_ACTION_TYPE.SingOut });
 };
 
@@ -110,8 +110,34 @@ const clearErrorMessage = (dispatch: Dispatch<ReducerAction>) => () => {
   dispatch({ type: TRACK_ACTION_TYPE.SetError, payload: '' });
 };
 
+const tryLocalSignIn = (dispatch: Dispatch<ReducerAction>) => async () => {
+  try {
+    const token = await getItemAsync(deviceStorage.Token);
+    if (!token) {
+      return;
+    }
+
+    dispatch({ type: TRACK_ACTION_TYPE.SetLoading, payload: true });
+
+    const response = await trackerApi.get<User>('/getUser', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    const user = response.data;
+
+    dispatch({ type: TRACK_ACTION_TYPE.SingIn, payload: { user: { email: user.email, password: '' }, token: token } });
+
+  } catch (err) {
+    RootNavigation.navigate(SCREEN.Signin);
+  } finally {
+    dispatch({ type: TRACK_ACTION_TYPE.SetLoading, payload: false });
+  }
+};
+
 const actions = {
-  signIn, signOut, signUp, clearErrorMessage
+  signIn, signOut, signUp, clearErrorMessage, tryLocalSignIn
 };
 
 const initialState: ReducerState = {
