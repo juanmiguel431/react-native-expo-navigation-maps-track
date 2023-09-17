@@ -4,6 +4,7 @@ import { TRACK_ACTION_TYPE } from '../models/actions';
 import { SignInResponse, SignUpResponse, User } from '../models/login';
 import trackerApi from '../apis/trackerApi';
 import { AxiosError } from 'axios';
+import { deleteItemAsync, setItemAsync } from '../apis/secureStorage';
 
 type ReducerState = {
   isSignedIn: boolean;
@@ -52,45 +53,47 @@ const authReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   }
 }
 
-const signIn = (dispatch: Dispatch<ReducerAction>) => {
-  return async (user: User) => {
-    try {
-      dispatch({ type: TRACK_ACTION_TYPE.SetLoading, payload: true });
-      const response = await trackerApi.post<SignInResponse>('/signin', user);
-      dispatch({ type: TRACK_ACTION_TYPE.SingIn, payload: { user: user, token: response.data.token } });
-    } catch (err) {
-      if (err instanceof Error) {
-        dispatch({ type: TRACK_ACTION_TYPE.SetError, payload: err.message });
-      }
-    } finally {
-      dispatch({ type: TRACK_ACTION_TYPE.SetLoading, payload: false });
+const signIn = (dispatch: Dispatch<ReducerAction>) => async (user: User) => {
+  try {
+    dispatch({ type: TRACK_ACTION_TYPE.SetLoading, payload: true });
+    const response = await trackerApi.post<SignInResponse>('/signin', user);
+    dispatch({ type: TRACK_ACTION_TYPE.SingIn, payload: { user: user, token: response.data.token } });
+  } catch (err) {
+    if (err instanceof Error) {
+      dispatch({ type: TRACK_ACTION_TYPE.SetError, payload: err.message });
     }
+  } finally {
+    dispatch({ type: TRACK_ACTION_TYPE.SetLoading, payload: false });
   }
 };
 
-const signUp = (dispatch: Dispatch<ReducerAction>) => {
-  return async (user: User) => {
-    try {
-      dispatch({ type: TRACK_ACTION_TYPE.SetLoading, payload: true });
-      const response = await trackerApi.post<SignUpResponse>('/signup', user);
-      dispatch({ type: TRACK_ACTION_TYPE.SingUp, payload: { user: user, token: response.data.token } });
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        const errorMessage: string = err.response?.data;
-        dispatch({ type: TRACK_ACTION_TYPE.SetError, payload: errorMessage });
-      } else if (err instanceof Error) {
-        dispatch({ type: TRACK_ACTION_TYPE.SetError, payload: err.message });
-      }
-    } finally {
-      dispatch({ type: TRACK_ACTION_TYPE.SetLoading, payload: false });
+const signUp = (dispatch: Dispatch<ReducerAction>) => async (user: User) => {
+  try {
+    dispatch({ type: TRACK_ACTION_TYPE.SetLoading, payload: true });
+    const response = await trackerApi.post<SignUpResponse>('/signup', user);
+
+    const token = response.data.token;
+    await setItemAsync('token', token);
+
+    dispatch({ type: TRACK_ACTION_TYPE.SingUp, payload: { user: user, token: token } });
+    return true;
+
+  } catch (err) {
+    if (err instanceof AxiosError) {
+      const errorMessage: string = err.response?.data;
+      dispatch({ type: TRACK_ACTION_TYPE.SetError, payload: errorMessage });
+    } else if (err instanceof Error) {
+      dispatch({ type: TRACK_ACTION_TYPE.SetError, payload: err.message });
     }
+  } finally {
+    dispatch({ type: TRACK_ACTION_TYPE.SetLoading, payload: false });
   }
+  return false;
 };
 
-const signOut = (dispatch: Dispatch<ReducerAction>) => {
-  return async () => {
-    dispatch({ type: TRACK_ACTION_TYPE.SingOut });
-  }
+const signOut = (dispatch: Dispatch<ReducerAction>) => async () => {
+  await deleteItemAsync('token');
+  dispatch({ type: TRACK_ACTION_TYPE.SingOut });
 };
 
 const actions = {

@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useMemo, useReducer } from 'react';
 
-export type BoundedAction = (...arg: any) => void;
+export type BoundedAction = (...arg: any) => any;
 export type BoundedActions = Record<string, BoundedAction>;
 
 export type ActionType<A> = (dispatch: React.Dispatch<A>) => BoundedAction;
