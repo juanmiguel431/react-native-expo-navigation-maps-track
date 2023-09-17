@@ -45,7 +45,7 @@ const LoginFlow = () => {
   return (
     <Stack.Navigator initialRouteName={SCREEN.Signup}>
       <Stack.Screen name={SCREEN.Signup} component={SignupScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name={SCREEN.Signin} component={SigninScreen} options={{ title: 'Signin' }}/>
+      <Stack.Screen name={SCREEN.Signin} component={SigninScreen} options={{ headerShown: false }}/>
     </Stack.Navigator>
   );
 };
