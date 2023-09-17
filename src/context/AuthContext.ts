@@ -59,7 +59,11 @@ const signIn = (dispatch: Dispatch<ReducerAction>) => async (user: User) => {
   try {
     dispatch({ type: TRACK_ACTION_TYPE.SetLoading, payload: true });
     const response = await trackerApi.post<SignInResponse>('/signin', user);
-    dispatch({ type: TRACK_ACTION_TYPE.SingIn, payload: { user: user, token: response.data.token } });
+
+    const token = response.data.token;
+    await setItemAsync('token', token);
+
+    dispatch({ type: TRACK_ACTION_TYPE.SingIn, payload: { user: user, token: token } });
   } catch (err) {
     if (err instanceof Error) {
       dispatch({ type: TRACK_ACTION_TYPE.SetError, payload: err.message });
