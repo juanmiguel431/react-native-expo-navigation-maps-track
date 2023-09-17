@@ -36,7 +36,7 @@ const MainFlow: React.FC = () => {
   return (
     <Tab.Navigator initialRouteName={SCREEN.Tracks}>
       <Tab.Screen name={SCREEN.Tracks} component={TrackComp} options={{ headerShown: false }}/>
-      <Tab.Screen name={SCREEN.TrackCreate} component={TrackCreateScreen}/>
+      <Tab.Screen name={SCREEN.TrackCreate} component={TrackCreateScreen} options={{ title: 'Create' }}/>
       <Tab.Screen name={SCREEN.Account} component={AccountScreen} options={{ headerShown: false }}/>
     </Tab.Navigator>
   )
@@ -77,7 +77,7 @@ const AppContainer: React.FC = () => {
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <StatusBar style="auto" />
+      <StatusBar style="auto"/>
       <AppContainer/>
     </AuthProvider>
   );
