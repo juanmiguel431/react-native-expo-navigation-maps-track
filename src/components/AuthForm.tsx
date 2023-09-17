@@ -61,7 +61,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ header, submit, link, errorM
       }
       <Spacer>
         <Button
-          type="clear"
+          // type="clear"
           title={submit.title}
           onPress={() => {
             submit.callback({ email: email, password: password })
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     marginTop: 15
   },
   link: {
+    fontSize: 16,
     color: 'blue'
   }
 });

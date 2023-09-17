@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { SCREEN, SignupScreenProps } from '../models/screen';
 import { AuthContext } from '../context/AuthContext';
-import AuthForm from '../components/AuthForm';
+import { AuthForm } from '../components';
 
 export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
 

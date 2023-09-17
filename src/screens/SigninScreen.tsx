@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { SCREEN, SigninScreenProps } from '../models/screen';
 import { AuthContext } from '../context/AuthContext';
-import AuthForm from '../components/AuthForm';
+import { AuthForm } from '../components';
 
 export const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
   const { signIn, state } = useContext(AuthContext);
@@ -13,7 +13,7 @@ export const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
       submit={{ title: 'Sign In', callback: signIn }}
       errorMessage={state.errorMessage}
       link={{
-        title: 'Already have an account? Sign in instead',
+        title: 'Dont have an account? Go back to sign up.',
         callback: () => {
           navigation.navigate(SCREEN.Signup);
         }
