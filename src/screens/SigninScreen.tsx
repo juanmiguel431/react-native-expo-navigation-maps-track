@@ -3,16 +3,12 @@ import { StyleSheet, View } from 'react-native';
 import { SCREEN, SigninScreenProps } from '../models/screen';
 import { AuthContext } from '../context/AuthContext';
 import { AuthForm, NavLink } from '../components';
-import { useFocusEffect } from '@react-navigation/native';
+import useClearErrorMessage from '../hooks/useClearErrorMessage';
 
 export const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
-  const { state, signIn, clearErrorMessage } = useContext(AuthContext);
+  const { state, signIn } = useContext(AuthContext);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      clearErrorMessage();
-    }, [])
-  );
+  useClearErrorMessage();
 
   return (
     <View style={styles.container}>
