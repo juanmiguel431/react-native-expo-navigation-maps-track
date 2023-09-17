@@ -11,12 +11,12 @@ import {
   SignupScreen,
   TrackCreateScreen,
   TrackDetailScreen,
-  TrackListScreen
+  TrackListScreen,
+  ResolveAuthScreen
 } from './src/screens';
 import { RootStackParamList, SCREEN } from './src/models/screen';
 import { AuthContext, AuthProvider } from './src/context/AuthContext';
 import { navigationRef } from './src/RootNavigation';
-import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
