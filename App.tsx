@@ -68,6 +68,7 @@ const AppContainer: React.FC = () => {
 const App: React.FC = () => {
   return (
     <AuthProvider>
+      <StatusBar style="auto" />
       <AppContainer/>
     </AuthProvider>
   );
