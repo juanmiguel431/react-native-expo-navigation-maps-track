@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Spacer from './Spacer';
 import { Button, Input, Text } from '@rneui/themed';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -8,11 +8,10 @@ import { User } from '../models/login';
 type AuthFormProps = {
   header: string;
   submit: { title: string; callback: (user: User) => void };
-  link?: { title: string; callback: () => void };
   errorMessage?: string;
 }
 
-export const AuthForm: React.FC<AuthFormProps> = ({ header, submit, link, errorMessage }) => {
+export const AuthForm: React.FC<AuthFormProps> = ({ header, submit, errorMessage }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -68,15 +67,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({ header, submit, link, errorM
           }}
         />
       </Spacer>
-      {link &&
-        <TouchableOpacity onPress={link.callback}>
-          <Spacer>
-            <Text style={styles.link}>
-              {link.title}
-            </Text>
-          </Spacer>
-        </TouchableOpacity>
-      }
     </View>
   );
 };
@@ -99,10 +89,6 @@ const styles = StyleSheet.create({
     color: 'red',
     marginLeft: 15,
     marginTop: 15
-  },
-  link: {
-    fontSize: 16,
-    color: 'blue'
   }
 });
 

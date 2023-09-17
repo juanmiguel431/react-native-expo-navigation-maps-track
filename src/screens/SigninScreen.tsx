@@ -1,27 +1,24 @@
 import React, { useContext } from 'react';
-import { StyleSheet } from 'react-native';
 import { SCREEN, SigninScreenProps } from '../models/screen';
 import { AuthContext } from '../context/AuthContext';
-import { AuthForm } from '../components';
+import { AuthForm, NavLink } from '../components';
 
 export const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
-  const { signIn, state } = useContext(AuthContext);
+  const { state, signIn } = useContext(AuthContext);
 
   return (
-    <AuthForm
-      header="Sign In for Tracker"
-      submit={{ title: 'Sign In', callback: signIn }}
-      errorMessage={state.errorMessage}
-      link={{
-        title: 'Dont have an account? Go back to sign up.',
-        callback: () => {
-          navigation.navigate(SCREEN.Signup);
-        }
-      }}
-    />
+    <>
+      <AuthForm
+        header="Sign In for Tracker"
+        submit={{ title: 'Sign In', callback: signIn }}
+        errorMessage={state.errorMessage}
+      />
+      <NavLink
+        text="Dont have an account? Go back to sign up."
+        routeName={SCREEN.Signup}
+      />
+    </>
   );
 }
-
-const styles = StyleSheet.create({});
 
 export default SigninScreen;

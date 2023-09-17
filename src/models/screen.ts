@@ -21,7 +21,7 @@ export const enum SCREEN {
   LoginFlow = 'LoginFlow',
 }
 
-type Screen = ObjectValues<typeof SCREEN>;
+export type Screen = ObjectValues<typeof SCREEN>;
 
 export type RootStackParamList = {
   [SCREEN.Account]: undefined;
