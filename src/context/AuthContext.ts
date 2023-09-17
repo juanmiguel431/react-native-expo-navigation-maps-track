@@ -7,6 +7,7 @@ import { AxiosError } from 'axios';
 import { deleteItemAsync, setItemAsync } from '../apis/secureStorage';
 import * as RootNavigation from '../RootNavigation';
 import { SCREEN } from '../models/screen';
+import { deviceStorage } from '../models/device-storage';
 
 type ReducerState = {
   isSignedIn: boolean;
@@ -61,7 +62,7 @@ const signIn = (dispatch: Dispatch<ReducerAction>) => async (user: User) => {
     const response = await trackerApi.post<SignInResponse>('/signin', user);
 
     const token = response.data.token;
-    await setItemAsync('token', token);
+    await setItemAsync(deviceStorage.Token, token);
 
     dispatch({ type: TRACK_ACTION_TYPE.SingIn, payload: { user: user, token: token } });
   } catch (err) {
@@ -79,7 +80,7 @@ const signUp = (dispatch: Dispatch<ReducerAction>) => async (user: User) => {
     const response = await trackerApi.post<SignUpResponse>('/signup', user);
 
     const token = response.data.token;
-    await setItemAsync('token', token);
+    await setItemAsync(deviceStorage.Token, token);
 
     dispatch({ type: TRACK_ACTION_TYPE.SingUp, payload: { user: user, token: token } });
 
