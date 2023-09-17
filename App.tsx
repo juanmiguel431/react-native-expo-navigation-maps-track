@@ -36,7 +36,7 @@ const MainFlow: React.FC = () => {
   return (
     <Tab.Navigator initialRouteName={SCREEN.Tracks}>
       <Tab.Screen name={SCREEN.Tracks} component={TrackComp} options={{ headerShown: false }}/>
-      <Tab.Screen name={SCREEN.TrackCreate} component={TrackCreateScreen} options={{ title: 'Create' }}/>
+      <Tab.Screen name={SCREEN.TrackCreate} component={TrackCreateScreen} options={{ title: 'Create', headerShown: false }}/>
       <Tab.Screen name={SCREEN.Account} component={AccountScreen} options={{ headerShown: false }}/>
     </Tab.Navigator>
   )
