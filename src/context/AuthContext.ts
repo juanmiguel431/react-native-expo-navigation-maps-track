@@ -79,7 +79,7 @@ const signUp = (dispatch: Dispatch<ReducerAction>) => async (user: User) => {
 
     dispatch({ type: TRACK_ACTION_TYPE.SingUp, payload: { user: user, token: token } });
 
-    RootNavigation.navigate(SCREEN.Account); //It is not necessary. However, this is working as expected
+    // RootNavigation.navigate(SCREEN.Account); //It is not necessary. However, this is working as expected
 
     return true;
 
