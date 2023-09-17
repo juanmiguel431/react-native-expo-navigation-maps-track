@@ -1,4 +1,4 @@
-import { Reducer, Dispatch } from 'react';
+import { Dispatch, Reducer } from 'react';
 import createDataContext from './createDataContext';
 import { TRACK_ACTION_TYPE } from '../models/actions';
 import { SignInResponse, SignUpResponse, User } from '../models/login';
@@ -10,13 +10,19 @@ import { SCREEN } from '../models/screen';
 import { deviceStorage } from '../models/device-storage';
 
 type ReducerState = {
-  isSignedIn: boolean;
+  isSignedIn: boolean | null;
   isLoading: boolean;
   token: string;
   errorMessage: string;
   user: User | null;
 };
-type ReducerAction = SignInAction | SignOutAction | SignUpAction | SetLoadingAction | SetErrorAction;
+type ReducerAction =
+  SignInAction
+  | SignOutAction
+  | SignUpAction
+  | SetLoadingAction
+  | SetErrorAction
+  | ResolveAuthAction;
 
 type Action = { type: TRACK_ACTION_TYPE; payload?: any; };
 type SignUpAction = { type: TRACK_ACTION_TYPE.SingUp; payload: { user: User, token: string }; };
@@ -24,18 +30,11 @@ type SignInAction = { type: TRACK_ACTION_TYPE.SingIn; payload: { user: User, tok
 type SignOutAction = { type: TRACK_ACTION_TYPE.SingOut };
 type SetLoadingAction = { type: TRACK_ACTION_TYPE.SetLoading; payload: boolean; };
 type SetErrorAction = { type: TRACK_ACTION_TYPE.SetError; payload: string; };
+type ResolveAuthAction = { type: TRACK_ACTION_TYPE.ResolveAuth; payload: boolean; };
 
 const authReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   switch (action.type) {
     case TRACK_ACTION_TYPE.SingIn:
-      return {
-        ...state,
-        isSignedIn: true,
-        errorMessage: '',
-        isLoading: false,
-        user: { email: action.payload.user.email, password: '' },
-        token: action.payload.token
-      };
     case TRACK_ACTION_TYPE.SingUp:
       return {
         ...state,
@@ -51,6 +50,8 @@ const authReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
       return { ...state, isLoading: action.payload };
     case TRACK_ACTION_TYPE.SetError:
       return { ...state, errorMessage: action.payload };
+    case TRACK_ACTION_TYPE.ResolveAuth:
+      return { ...state, isSignedIn: action.payload };
     default:
       return state;
   }
@@ -113,8 +114,9 @@ const clearErrorMessage = (dispatch: Dispatch<ReducerAction>) => () => {
 const tryLocalSignIn = (dispatch: Dispatch<ReducerAction>) => async () => {
   try {
     const token = await getItemAsync(deviceStorage.Token);
+
     if (!token) {
-      return;
+      return dispatch({ type: TRACK_ACTION_TYPE.ResolveAuth, payload: false });
     }
 
     dispatch({ type: TRACK_ACTION_TYPE.SetLoading, payload: true });
@@ -130,6 +132,7 @@ const tryLocalSignIn = (dispatch: Dispatch<ReducerAction>) => async () => {
     dispatch({ type: TRACK_ACTION_TYPE.SingIn, payload: { user: { email: user.email, password: '' }, token: token } });
 
   } catch (err) {
+    dispatch({ type: TRACK_ACTION_TYPE.ResolveAuth, payload: false });
     RootNavigation.navigate(SCREEN.Signin);
   } finally {
     dispatch({ type: TRACK_ACTION_TYPE.SetLoading, payload: false });
@@ -141,7 +144,7 @@ const actions = {
 };
 
 const initialState: ReducerState = {
-  isSignedIn: false,
+  isSignedIn: null,
   isLoading: false,
   token: '',
   errorMessage: '',

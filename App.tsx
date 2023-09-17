@@ -16,6 +16,7 @@ import {
 import { RootStackParamList, SCREEN } from './src/models/screen';
 import { AuthContext, AuthProvider } from './src/context/AuthContext';
 import { navigationRef } from './src/RootNavigation';
+import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -50,21 +51,24 @@ const LoginFlow = () => {
   );
 };
 
-const AppContainer: React.FC = () => {
-  const { state: { isSignedIn }, tryLocalSignIn } = useContext(AuthContext);
+const resolveAuth = (isSignedIn: boolean | null) => {
+  switch (isSignedIn) {
+    case true:
+      return <Stack.Screen name={SCREEN.MainFlow} component={MainFlow}/>;
+    case false:
+      return <Stack.Screen name={SCREEN.LoginFlow} component={LoginFlow}/>;
+    default:
+      return <Stack.Screen name={SCREEN.ResolveAuth} component={ResolveAuthScreen}/>
+  }
+}
 
-  useEffect(() => {
-    tryLocalSignIn();
-  }, [tryLocalSignIn]);
+const AppContainer: React.FC = () => {
+  const { state: { isSignedIn } } = useContext(AuthContext);
 
   return (
     <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator initialRouteName={SCREEN.LoginFlow} screenOptions={{ headerShown: false }}>
-        {isSignedIn ? (
-          <Stack.Screen name={SCREEN.MainFlow} component={MainFlow}/>
-        ) : (
-          <Stack.Screen name={SCREEN.LoginFlow} component={LoginFlow}/>
-        )}
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {resolveAuth(isSignedIn)}
       </Stack.Navigator>
     </NavigationContainer>
   );

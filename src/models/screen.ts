@@ -19,6 +19,7 @@ export const enum SCREEN {
   Tracks = 'Tracks',
   MainFlow = 'MainFlow',
   LoginFlow = 'LoginFlow',
+  ResolveAuth = 'ResolveAuth',
 }
 
 export type Screen = ObjectValues<typeof SCREEN>;
@@ -33,6 +34,7 @@ export type RootStackParamList = {
   [SCREEN.Tracks]: undefined;
   [SCREEN.MainFlow]: undefined;
   [SCREEN.LoginFlow]: undefined;
+  [SCREEN.ResolveAuth]: undefined;
 };
 
 export type AccountScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Account>;
@@ -44,3 +46,4 @@ export type TrackListScreenProps = NativeStackScreenProps<RootStackParamList, SC
 export type TracksScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Tracks>;
 export type MainFlowScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.MainFlow>;
 export type LoginFlowScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.LoginFlow>;
+export type ResolveAuthScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.ResolveAuth>;

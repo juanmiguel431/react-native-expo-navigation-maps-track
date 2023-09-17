@@ -5,4 +5,5 @@ export const enum TRACK_ACTION_TYPE {
   SingOut = 'SignOut',
   SetLoading = 'SetLoading',
   SetError = 'SetError',
+  ResolveAuth = 'ResolveAuth',
 }

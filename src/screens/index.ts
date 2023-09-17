@@ -4,3 +4,4 @@ export * from './SignupScreen';
 export * from './TrackCreate';
 export * from './TrackDetailScreen';
 export * from './TrackListScreen';
+export * from './ResolveAuthScreen';
