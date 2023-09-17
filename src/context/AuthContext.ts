@@ -5,6 +5,8 @@ import { SignInResponse, SignUpResponse, User } from '../models/login';
 import trackerApi from '../apis/trackerApi';
 import { AxiosError } from 'axios';
 import { deleteItemAsync, setItemAsync } from '../apis/secureStorage';
+import * as RootNavigation from '../RootNavigation';
+import { SCREEN } from '../models/screen';
 
 type ReducerState = {
   isSignedIn: boolean;
@@ -76,6 +78,9 @@ const signUp = (dispatch: Dispatch<ReducerAction>) => async (user: User) => {
     await setItemAsync('token', token);
 
     dispatch({ type: TRACK_ACTION_TYPE.SingUp, payload: { user: user, token: token } });
+
+    RootNavigation.navigate(SCREEN.MainFlow);
+
     return true;
 
   } catch (err) {

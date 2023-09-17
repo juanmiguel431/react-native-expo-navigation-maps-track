@@ -61,9 +61,9 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
           title="Sign Up"
           onPress={async () => {
             const success = await signUp({ email: email, password: password });
-            if (success) {
-              navigation.navigate(SCREEN.MainFlow);
-            }
+            // if (success) {
+            //   navigation.navigate(SCREEN.MainFlow);
+            // }
           }}
         />
       </Spacer>

@@ -15,6 +15,7 @@ import {
 } from './src/screens';
 import { RootStackParamList, SCREEN } from './src/models/screen';
 import { AuthContext, AuthProvider } from './src/context/AuthContext';
+import { navigationRef } from './src/RootNavigation';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -52,7 +53,7 @@ const LoginFlow = () => {
 const AppContainer: React.FC = () => {
   const { state: { isSignedIn } } = useContext(AuthContext);
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator initialRouteName={SCREEN.LoginFlow} screenOptions={{ headerShown: false }}>
         {isSignedIn ? (
           <Stack.Screen name={SCREEN.MainFlow} component={MainFlow}/>
