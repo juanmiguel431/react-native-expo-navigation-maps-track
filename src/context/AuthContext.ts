@@ -106,8 +106,12 @@ const signOut = (dispatch: Dispatch<ReducerAction>) => async () => {
   dispatch({ type: TRACK_ACTION_TYPE.SingOut });
 };
 
+const clearErrorMessage = (dispatch: Dispatch<ReducerAction>) => () => {
+  dispatch({ type: TRACK_ACTION_TYPE.SetError, payload: '' });
+};
+
 const actions = {
-  signIn, signOut, signUp
+  signIn, signOut, signUp, clearErrorMessage
 };
 
 const initialState: ReducerState = {
