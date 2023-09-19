@@ -16,6 +16,7 @@ import {
 } from './src/screens';
 import { RootStackParamList, SCREEN } from './src/models/screen';
 import { AuthContext, AuthProvider } from './src/context/AuthContext';
+import { LocationProvider } from './src/context/LocationContext';
 import { navigationRef } from './src/RootNavigation';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -34,11 +35,13 @@ const TrackComp: React.FC = () => {
 
 const MainFlow: React.FC = () => {
   return (
-    <Tab.Navigator initialRouteName={SCREEN.Tracks}>
-      <Tab.Screen name={SCREEN.Tracks} component={TrackComp} options={{ headerShown: false }}/>
-      <Tab.Screen name={SCREEN.TrackCreate} component={TrackCreateScreen} options={{ title: 'Create', headerShown: false }}/>
-      <Tab.Screen name={SCREEN.Account} component={AccountScreen} options={{ headerShown: false }}/>
-    </Tab.Navigator>
+    <LocationProvider>
+      <Tab.Navigator initialRouteName={SCREEN.Tracks}>
+        <Tab.Screen name={SCREEN.Tracks} component={TrackComp} options={{ headerShown: false }}/>
+        <Tab.Screen name={SCREEN.TrackCreate} component={TrackCreateScreen} options={{ title: 'Create', headerShown: false }}/>
+        <Tab.Screen name={SCREEN.Account} component={AccountScreen} options={{ headerShown: false }}/>
+      </Tab.Navigator>
+    </LocationProvider>
   )
 };
 

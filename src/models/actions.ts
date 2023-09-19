@@ -7,3 +7,10 @@ export const enum TRACK_ACTION_TYPE {
   SetError = 'SetError',
   ResolveAuth = 'ResolveAuth',
 }
+
+
+export const enum LOCATION_ACTION_TYPE {
+  StartRecording = 'StartRecording',
+  StopRecording = 'StopRecording',
+  SetCurrentLocation = 'SetCurrentLocation',
+}
