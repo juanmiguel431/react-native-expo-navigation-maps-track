@@ -47,7 +47,7 @@ const MainFlow: React.FC = () => {
 
 const LoginFlow: React.FC = () => {
   return (
-    <Stack.Navigator initialRouteName={SCREEN.Signup}>
+    <Stack.Navigator initialRouteName={SCREEN.Signin}>
       <Stack.Screen name={SCREEN.Signup} component={SignupScreen} options={{ headerShown: false }}/>
       <Stack.Screen name={SCREEN.Signin} component={SigninScreen} options={{ headerShown: false }}/>
     </Stack.Navigator>
