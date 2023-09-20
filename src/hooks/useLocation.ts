@@ -14,18 +14,18 @@ export const useLocation = (shouldTrack: boolean, callback: (location: IPoint) =
       return;
     }
 
-    return Location.watchPositionAsync({
+    const subscription = await Location.watchPositionAsync({
       accuracy: LocationAccuracy.BestForNavigation,
       timeInterval: 1000,
       distanceInterval: 10
     }, callback);
+
+    setSubscription(subscription);
   }, []);
 
   useEffect(() => {
     if (shouldTrack && !subscription) {
-      startWatching(callback).then((subscription) => {
-        setSubscription(subscription);
-      });
+      startWatching(callback);
     } else if (!shouldTrack && subscription) {
       subscription.remove();
       setSubscription(undefined);
