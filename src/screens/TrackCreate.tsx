@@ -1,10 +1,10 @@
 // import '../_mockLocation';
 import React, { useContext } from 'react';
-import { StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '@rneui/themed';
 import { TrackCreateScreenProps } from '../models/screen';
-import { Map } from '../components';
+import { Map, TrackForm } from '../components';
 import { LocationContext } from '../context/LocationContext';
 import { ActivityIndicator } from 'react-native-paper';
 import useLocation from '../hooks/useLocation';
@@ -25,6 +25,7 @@ export const TrackCreateScreen: React.FC<TrackCreateScreenProps> = () => {
       )}
 
       {errorMsg && <Text>{errorMsg}</Text>}
+      <TrackForm/>
     </SafeAreaView>
   );
 }
