@@ -13,7 +13,7 @@ import { useIsFocused } from '@react-navigation/native';
 export const TrackCreateScreen: React.FC<TrackCreateScreenProps> = () => {
   const { state: { currentLocation }, setCurrentLocation } = useContext(LocationContext);
   const isFocused = useIsFocused();
-  const [errorMsg] = useLocation(setCurrentLocation, isFocused);
+  const [errorMsg] = useLocation(isFocused, setCurrentLocation);
 
   return (
     <SafeAreaView>

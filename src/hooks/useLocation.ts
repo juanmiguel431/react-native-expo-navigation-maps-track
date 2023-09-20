@@ -3,7 +3,7 @@ import * as Location from 'expo-location';
 import { LocationAccuracy } from 'expo-location';
 import { IPoint } from '../models/track';
 
-export const useLocation = (callback: (location: IPoint) => void, isFocused: boolean) => {
+export const useLocation = (shouldTrack: boolean, callback: (location: IPoint) => void) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [subscription, setSubscription] = useState<Location.LocationSubscription | undefined>(undefined);
 
@@ -22,15 +22,15 @@ export const useLocation = (callback: (location: IPoint) => void, isFocused: boo
   }, []);
 
   useEffect(() => {
-    if (isFocused && !subscription) {
+    if (shouldTrack && !subscription) {
       startWatching(callback).then((subscription) => {
         setSubscription(subscription);
       });
-    } else if (!isFocused && subscription) {
+    } else if (!shouldTrack && subscription) {
       subscription.remove();
       setSubscription(undefined);
     }
-  }, [callback, startWatching, isFocused, subscription]);
+  }, [callback, startWatching, shouldTrack, subscription]);
 
   return [errorMsg];
 };
