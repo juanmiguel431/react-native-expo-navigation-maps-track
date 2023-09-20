@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: 'https://091e-186-6-126-137.ngrok-free.app',
+  baseURL: process.env.EXPO_PUBLIC_NGROK_TRACK_SERVER_API,
   headers: {
     'Content-Type': 'application/json'
   }
