@@ -3,8 +3,9 @@ import * as Location from 'expo-location';
 import { LocationAccuracy } from 'expo-location';
 import { IPoint } from '../models/track';
 
-export const useLocation = (callback: (location: IPoint) => void) => {
+export const useLocation = (callback: (location: IPoint) => void, isFocused: boolean) => {
   const [errorMsg, setErrorMsg] = useState('');
+  const [subscription, setSubscription] = useState<Location.LocationSubscription | undefined>(undefined);
 
   const startWatching = useCallback(async (callback: (location: IPoint) => void) => {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -13,7 +14,7 @@ export const useLocation = (callback: (location: IPoint) => void) => {
       return;
     }
 
-    await Location.watchPositionAsync({
+    return Location.watchPositionAsync({
       accuracy: LocationAccuracy.BestForNavigation,
       timeInterval: 1000,
       distanceInterval: 10
@@ -21,8 +22,15 @@ export const useLocation = (callback: (location: IPoint) => void) => {
   }, []);
 
   useEffect(() => {
-    startWatching(callback);
-  }, [callback, startWatching]);
+    if (isFocused && !subscription) {
+      startWatching(callback).then((subscription) => {
+        setSubscription(subscription);
+      });
+    } else if (!isFocused && subscription) {
+      subscription.remove();
+      setSubscription(undefined);
+    }
+  }, [callback, startWatching, isFocused, subscription]);
 
   return [errorMsg];
 };

@@ -8,10 +8,12 @@ import { Map } from '../components';
 import { LocationContext } from '../context/LocationContext';
 import { ActivityIndicator } from 'react-native-paper';
 import useLocation from '../hooks/useLocation';
+import { useIsFocused } from '@react-navigation/native';
 
 export const TrackCreateScreen: React.FC<TrackCreateScreenProps> = () => {
   const { state: { currentLocation }, setCurrentLocation } = useContext(LocationContext);
-  const [errorMsg] = useLocation(setCurrentLocation);
+  const isFocused = useIsFocused();
+  const [errorMsg] = useLocation(setCurrentLocation, isFocused);
 
   return (
     <SafeAreaView>
