@@ -8,19 +8,25 @@ export const useLocation = (shouldTrack: boolean, callback: (location: IPoint) =
   const [subscription, setSubscription] = useState<Location.LocationSubscription | undefined>(undefined);
 
   const startWatching = useCallback(async (callback: (location: IPoint) => void) => {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') {
-      setErrorMsg('Please enable location services.');
-      return;
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Please enable location services.');
+        return;
+      }
+
+      const subscription = await Location.watchPositionAsync({
+        accuracy: LocationAccuracy.BestForNavigation,
+        timeInterval: 1000,
+        distanceInterval: 10
+      }, callback);
+
+      setSubscription(subscription);
+    } catch (e) {
+      if (e instanceof Error) {
+        setErrorMsg(e.message);
+      }
     }
-
-    const subscription = await Location.watchPositionAsync({
-      accuracy: LocationAccuracy.BestForNavigation,
-      timeInterval: 1000,
-      distanceInterval: 10
-    }, callback);
-
-    setSubscription(subscription);
   }, []);
 
   useEffect(() => {
