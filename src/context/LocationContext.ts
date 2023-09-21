@@ -5,48 +5,54 @@ import { IPoint } from '../models/track';
 
 type ReducerState = {
   recording: boolean;
+  name: string;
   locations: Array<IPoint>;
   currentLocation: IPoint | null;
 };
 
-type ReducerAction = StartRecordingAction | StopRecordingAction | AddLocationAction;
+type ReducerAction = AddLocationAction | ChangeNameAction | ToggleRecordingAction;
 
-type StartRecordingAction = { type: LOCATION_ACTION_TYPE.StartRecording };
-type StopRecordingAction = { type: LOCATION_ACTION_TYPE.StopRecording };
-type AddLocationAction = { type: LOCATION_ACTION_TYPE.SetCurrentLocation, payload: IPoint };
+type AddLocationAction = { type: LOCATION_ACTION_TYPE.AddLocation; payload: { location: IPoint; isRecording: boolean; } };
+type ChangeNameAction = { type: LOCATION_ACTION_TYPE.ChangeName; payload: string; };
+type ToggleRecordingAction = { type: LOCATION_ACTION_TYPE.ToggleRecording; };
 
 const locationReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   switch (action.type) {
-    case LOCATION_ACTION_TYPE.StartRecording:
-      return state;
-    case LOCATION_ACTION_TYPE.StopRecording:
-      return state;
-    case LOCATION_ACTION_TYPE.SetCurrentLocation:
-      return { ...state, currentLocation: action.payload };
-      // return { ...state, locations: [...state.locations, action.payload], currentLocation: action.payload };
+    case LOCATION_ACTION_TYPE.ChangeName:
+      return { ...state, name: action.payload };
+    case LOCATION_ACTION_TYPE.ToggleRecording:
+      return { ...state, recording: !state.recording };
+    case LOCATION_ACTION_TYPE.AddLocation: {
+      if (action.payload.isRecording) {
+        return { ...state, locations: [...state.locations, action.payload.location], currentLocation: action.payload.location };
+      } else {
+        return { ...state, currentLocation: action.payload.location };
+      }
+    }
     default:
       return state;
   }
 };
 
-const startRecording = (dispatch: Dispatch<ReducerAction>) => async () => {
-  dispatch({ type: LOCATION_ACTION_TYPE.StartRecording });
+const toggleRecording = (dispatch: Dispatch<ReducerAction>) => () => {
+  dispatch({ type: LOCATION_ACTION_TYPE.ToggleRecording });
 };
 
-const stopRecording = (dispatch: Dispatch<ReducerAction>) => async () => {
-  dispatch({ type: LOCATION_ACTION_TYPE.StopRecording });
+const addLocation = (dispatch: Dispatch<ReducerAction>) => (location: IPoint, isRecording: boolean) => {
+  dispatch({ type: LOCATION_ACTION_TYPE.AddLocation, payload: { location: location, isRecording: isRecording } });
 };
 
-const setCurrentLocation = (dispatch: Dispatch<ReducerAction>) => async (point: IPoint) => {
-  dispatch({ type: LOCATION_ACTION_TYPE.SetCurrentLocation, payload: point });
+const changeName = (dispatch: Dispatch<ReducerAction>) => (name: string) => {
+  dispatch({ type: LOCATION_ACTION_TYPE.ChangeName, payload: name });
 };
 
 const actions = {
-  startRecording, stopRecording, setCurrentLocation
+  addLocation, changeName, toggleRecording
 };
 
 const initialState: ReducerState = {
   recording: false,
+  name: '',
   locations: [],
   currentLocation: null,
 };

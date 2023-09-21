@@ -8,9 +8,8 @@ export const enum TRACK_ACTION_TYPE {
   ResolveAuth = 'ResolveAuth',
 }
 
-
 export const enum LOCATION_ACTION_TYPE {
-  StartRecording = 'StartRecording',
-  StopRecording = 'StopRecording',
-  SetCurrentLocation = 'SetCurrentLocation',
+  ToggleRecording = 'ToggleRecording',
+  AddLocation = 'AddLocation',
+  ChangeName = 'ChangeName',
 }

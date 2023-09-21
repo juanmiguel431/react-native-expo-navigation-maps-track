@@ -30,13 +30,15 @@ export const useLocation = (shouldTrack: boolean, callback: (location: IPoint) =
   }, []);
 
   useEffect(() => {
-    if (shouldTrack && !subscription) {
-      startWatching(callback);
-    } else if (!shouldTrack && subscription) {
+    if (subscription) {
       subscription.remove();
       setSubscription(undefined);
     }
-  }, [callback, startWatching, shouldTrack, subscription]);
+
+    if (shouldTrack) {
+      startWatching(callback);
+    }
+  }, [startWatching, callback, shouldTrack, subscription]);
 
   return [errorMsg];
 };

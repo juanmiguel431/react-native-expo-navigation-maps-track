@@ -1,5 +1,5 @@
 // import '../_mockLocation';
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '@rneui/themed';
@@ -9,11 +9,17 @@ import { LocationContext } from '../context/LocationContext';
 import { ActivityIndicator } from 'react-native-paper';
 import useLocation from '../hooks/useLocation';
 import { useIsFocused } from '@react-navigation/native';
+import { IPoint } from '../models/track';
 
 export const TrackCreateScreen: React.FC<TrackCreateScreenProps> = () => {
-  const { state: { currentLocation }, setCurrentLocation } = useContext(LocationContext);
+  const { state: { currentLocation, recording }, addLocation } = useContext(LocationContext);
   const isFocused = useIsFocused();
-  const [errorMsg] = useLocation(isFocused, setCurrentLocation);
+
+  const callBack = useCallback((location: IPoint) => {
+    addLocation(location, recording);
+  }, [addLocation, recording]);
+
+  const [errorMsg] = useLocation(isFocused, callBack);
 
   return (
     <SafeAreaView>

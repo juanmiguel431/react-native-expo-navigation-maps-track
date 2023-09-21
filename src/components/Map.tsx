@@ -35,7 +35,7 @@ export const Map: React.FC<MapProps> = ({ coords}) => {
 
 const styles = StyleSheet.create({
   map: {
-    height: 400
+    height: 200
   }
 });
 
