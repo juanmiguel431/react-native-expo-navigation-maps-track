@@ -16,7 +16,7 @@ export const TrackLocationMap: React.FC<TrackLocationMapProps> = ({ isFocused })
   const { state: { currentLocation, recording }, addLocation } = useContext(LocationContext);
 
   const callBack = useCallback((location: IPoint) => {
-    console.log(`Adding new Location ${location.timestamp}`);
+    // console.log(`${recording ? 'Recording' : 'Current'} Location ${location.timestamp}`);
     addLocation(location, recording);
   }, [addLocation, recording]);
 

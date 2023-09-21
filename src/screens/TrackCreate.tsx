@@ -10,7 +10,6 @@ import TrackLocationMap from '../components/TrackLocationMap';
 export const TrackCreateScreen: React.FC<TrackCreateScreenProps> = () => {
   const isFocused = useIsFocused();
 
-  console.log('Re-rendering trackCreate Form');
   return (
     <SafeAreaView>
       <Text h2>Create a track</Text>
