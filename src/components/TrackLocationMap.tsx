@@ -37,7 +37,7 @@ export const TrackLocationMap: React.FC<TrackLocationMapProps> = ({ isFocused })
 
 const styles = StyleSheet.create({
   activityIndicator: {
-    marginTop: 200
+    marginTop: 100
   }
 });
 

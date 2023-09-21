@@ -7,6 +7,14 @@ import { LocationContext } from '../context/LocationContext';
 export const TrackForm: React.FC = () => {
   const { state: { recording, name }, toggleRecording, changeName } = useContext(LocationContext);
 
+  const configButton = recording ? {
+    title: 'Stop Recording',
+    color: 'secondary'
+  } : {
+    title: 'Start Recording',
+    color: 'primary'
+  };
+
   return (
     <>
       <Spacer>
@@ -15,10 +23,7 @@ export const TrackForm: React.FC = () => {
           value={name}
           onChangeText={changeName}
         />
-        <Button
-          title={recording ? 'Stop Recording' : 'Start Recording'}
-          onPress={toggleRecording}
-        />
+        <Button {...configButton} onPress={toggleRecording}/>
       </Spacer>
     </>
   );
