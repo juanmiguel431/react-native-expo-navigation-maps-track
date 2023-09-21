@@ -5,7 +5,6 @@ import { IPoint } from '../models/track';
 
 export const useLocation = (shouldTrack: boolean, callback: (location: IPoint) => void) => {
   const [errorMsg, setErrorMsg] = useState('');
-  const [subscription, setSubscription] = useState<Location.LocationSubscription | undefined>(undefined);
 
   const startWatching = useCallback(async (callback: (location: IPoint) => void) => {
     try {
@@ -15,13 +14,12 @@ export const useLocation = (shouldTrack: boolean, callback: (location: IPoint) =
         return;
       }
 
-      const subscription = await Location.watchPositionAsync({
+      return await Location.watchPositionAsync({
         accuracy: LocationAccuracy.BestForNavigation,
         timeInterval: 1000,
         distanceInterval: 10
       }, callback);
 
-      setSubscription(subscription);
     } catch (e) {
       if (e instanceof Error) {
         setErrorMsg(e.message);
@@ -30,23 +28,23 @@ export const useLocation = (shouldTrack: boolean, callback: (location: IPoint) =
   }, []);
 
   useEffect(() => {
-    if (subscription) {
-      subscription.remove();
-      setSubscription(undefined);
-    }
+    let promise: Promise<Location.LocationSubscription | undefined>;
 
     if (shouldTrack) {
-      startWatching(callback);
+      promise = startWatching(callback);
     }
 
     return () => {
-      if (subscription) {
-        subscription.remove();
+      if (promise) {
+        promise.then((subscription) => {
+          if (subscription) {
+            subscription.remove();
+          }
+        });
       }
-    }
+    };
 
-    // eslint-disable-next-line
-  }, [callback, shouldTrack]);
+  }, [callback, shouldTrack, startWatching]);
 
   return [errorMsg];
 };
