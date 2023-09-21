@@ -38,7 +38,9 @@ export const useLocation = (shouldTrack: boolean, callback: (location: IPoint) =
     if (shouldTrack) {
       startWatching(callback);
     }
-  }, [startWatching, callback, shouldTrack, subscription]);
+
+    // eslint-disable-next-line
+  }, [startWatching, callback, shouldTrack]);
 
   return [errorMsg];
 };
