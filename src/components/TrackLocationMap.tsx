@@ -25,7 +25,10 @@ export const TrackLocationMap: React.FC<TrackLocationMapProps> = ({ isFocused })
   return (
     <>
       {currentLocation ? (
-        <Map coords={currentLocation.coords}/>
+        <Map
+          coords={currentLocation.coords}
+          locations={locations.map(p => p.coords)}
+        />
       ) : (
         <ActivityIndicator size="large" style={styles.activityIndicator}/>
       )}

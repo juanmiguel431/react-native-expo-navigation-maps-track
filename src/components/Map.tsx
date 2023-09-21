@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import MapView, { Polyline, Circle } from 'react-native-maps';
 import { ICoordinate } from '../models/track';
 
 type MapProps = {
   coords: ICoordinate;
+  locations?: ICoordinate[];
 }
 
-export const Map: React.FC<MapProps> = ({ coords}) => {
+export const Map: React.FC<MapProps> = ({ coords, locations}) => {
 
   return (
     <MapView
@@ -25,17 +26,18 @@ export const Map: React.FC<MapProps> = ({ coords}) => {
     >
       <Circle
         center={coords}
-        radius={30}
+        radius={10}
         strokeColor="rgba(158, 158, 255, 1.0)"
         fillColor="rgba(158, 158, 255, 0.3)"
       />
+      {locations && <Polyline coordinates={locations}/>}
     </MapView>
   );
 };
 
 const styles = StyleSheet.create({
   map: {
-    height: 200
+    height: 250
   }
 });
 
