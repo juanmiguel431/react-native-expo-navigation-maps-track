@@ -22,8 +22,13 @@ export const TrackForm: React.FC = () => {
           placeholder="Enter name"
           value={name}
           onChangeText={changeName}
+          disabled={recording}
         />
-        <Button {...configButton} onPress={toggleRecording}/>
+        <Button
+          {...configButton}
+          onPress={toggleRecording}
+          disabled={!name}
+        />
       </Spacer>
     </>
   );
