@@ -10,16 +10,19 @@ type ReducerState = {
   currentLocation: IPoint | null;
 };
 
-type ReducerAction = AddLocationAction | ChangeNameAction | ToggleRecordingAction;
+type ReducerAction = AddLocationAction | ChangeNameAction | ToggleRecordingAction | DeleteLocationsAction;
 
 type AddLocationAction = { type: LOCATION_ACTION_TYPE.AddLocation; payload: { location: IPoint; isRecording: boolean; } };
 type ChangeNameAction = { type: LOCATION_ACTION_TYPE.ChangeName; payload: string; };
 type ToggleRecordingAction = { type: LOCATION_ACTION_TYPE.ToggleRecording; };
+type DeleteLocationsAction = { type: LOCATION_ACTION_TYPE.DeleteLocations; };
 
 const locationReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   switch (action.type) {
     case LOCATION_ACTION_TYPE.ChangeName:
       return { ...state, name: action.payload };
+    case LOCATION_ACTION_TYPE.DeleteLocations:
+      return { ...state, locations: [] };
     case LOCATION_ACTION_TYPE.ToggleRecording:
       return { ...state, recording: !state.recording };
     case LOCATION_ACTION_TYPE.AddLocation: {
@@ -42,12 +45,16 @@ const addLocation = (dispatch: Dispatch<ReducerAction>) => (location: IPoint, is
   dispatch({ type: LOCATION_ACTION_TYPE.AddLocation, payload: { location: location, isRecording: isRecording } });
 };
 
+const deleteLocations = (dispatch: Dispatch<ReducerAction>) => () => {
+  dispatch({ type: LOCATION_ACTION_TYPE.DeleteLocations });
+};
+
 const changeName = (dispatch: Dispatch<ReducerAction>) => (name: string) => {
   dispatch({ type: LOCATION_ACTION_TYPE.ChangeName, payload: name });
 };
 
 const actions = {
-  addLocation, changeName, toggleRecording
+  addLocation, changeName, toggleRecording, deleteLocations
 };
 
 const initialState: ReducerState = {

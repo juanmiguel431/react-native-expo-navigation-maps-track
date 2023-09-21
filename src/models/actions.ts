@@ -11,5 +11,6 @@ export const enum TRACK_ACTION_TYPE {
 export const enum LOCATION_ACTION_TYPE {
   ToggleRecording = 'ToggleRecording',
   AddLocation = 'AddLocation',
+  DeleteLocations = 'DeleteLocations',
   ChangeName = 'ChangeName',
 }

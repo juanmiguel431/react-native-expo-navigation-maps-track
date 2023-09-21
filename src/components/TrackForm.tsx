@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
-import { StyleSheet } from 'react-native';
-import { Button, Input } from '@rneui/themed';
+import React, { useCallback, useContext, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Button, Dialog, Input, Text } from '@rneui/themed';
 import Spacer from './Spacer';
 import { LocationContext } from '../context/LocationContext';
 
 export const TrackForm: React.FC = () => {
-  const { state: { recording, name }, toggleRecording, changeName } = useContext(LocationContext);
+  const [showDialog, setShowDialog] = useState(false);
+  const { state: { recording, name, locations }, toggleRecording, changeName, deleteLocations } = useContext(LocationContext);
 
   const configButton = recording ? {
     title: 'Stop Recording',
@@ -14,6 +15,15 @@ export const TrackForm: React.FC = () => {
     title: 'Start Recording',
     color: 'primary'
   };
+
+  const toggleDialog = useCallback(() => {
+    setShowDialog((value) => !value);
+  }, []);
+
+  const onDeleteLocations = useCallback(() => {
+    deleteLocations();
+    toggleDialog();
+  }, [deleteLocations, toggleDialog]);
 
   return (
     <>
@@ -29,11 +39,45 @@ export const TrackForm: React.FC = () => {
           onPress={toggleRecording}
           disabled={!name}
         />
+
       </Spacer>
+      {!recording && locations.length > 0 &&
+        <Spacer>
+          <View style={styles.container}>
+            <View style={styles.button}>
+              <Button title="Delete" color="secondary" onPress={toggleDialog}/>
+            </View>
+            <View style={styles.button}>
+              <Button title="Save"/>
+            </View>
+          </View>
+        </Spacer>
+      }
+
+      <Dialog
+        isVisible={showDialog}
+        onBackdropPress={toggleDialog}
+      >
+        <Dialog.Title title="Are you sure?"/>
+        <Text>You are about to delete all locations stored during the last recording.</Text>
+        <Dialog.Actions>
+          <Dialog.Button title="Confirm" onPress={onDeleteLocations}/>
+          <Dialog.Button title="Cancel" onPress={toggleDialog}/>
+        </Dialog.Actions>
+      </Dialog>
     </>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  button: {
+    flex: 0.4
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  }
+});
 
 export default TrackForm;
