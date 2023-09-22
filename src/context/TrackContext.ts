@@ -2,6 +2,7 @@ import createDataContext from './createDataContext';
 import { Dispatch, Reducer } from 'react';
 import { TRACK_ACTION_TYPE } from '../models/actions';
 import { ITrack } from '../models/track';
+import { trackerApi } from '../apis';
 
 type ReducerState = {
   loading: boolean;
