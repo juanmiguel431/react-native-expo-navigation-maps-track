@@ -27,6 +27,7 @@ export const TrackDetailScreen: React.FC<TrackDetailScreenProps> = ({ navigation
         <ActivityIndicator size="large" style={styles.activityIndicator}/>
       ) : region && (
         <Map
+          height={400}
           initialRegion={track?.locations[0].coords}
           locations={track?.locations.map(p => p.coords)}
         />

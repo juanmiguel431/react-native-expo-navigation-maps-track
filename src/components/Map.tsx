@@ -7,14 +7,15 @@ type MapProps = {
   initialRegion: ICoordinate;
   currentLocation?: ICoordinate;
   locations?: ICoordinate[];
+  height?: number;
 }
 
-export const Map: React.FC<MapProps> = ({ currentLocation, locations, initialRegion }) => {
+export const Map: React.FC<MapProps> = ({ currentLocation, locations, initialRegion, height }) => {
 
   return (
     <MapView
       provider={PROVIDER_GOOGLE}
-      style={styles.map}
+      style={StyleSheet.flatten([styles.map, { height: height || 250 }])}
       initialRegion={{
         ...initialRegion,
         latitudeDelta: 0.01,
@@ -35,9 +36,7 @@ export const Map: React.FC<MapProps> = ({ currentLocation, locations, initialReg
 };
 
 const styles = StyleSheet.create({
-  map: {
-    height: 250
-  }
+  map: {}
 });
 
 export default Map;
