@@ -1,12 +1,10 @@
 import { Dispatch, Reducer } from 'react';
 import createDataContext from './createDataContext';
 import { LOCATION_ACTION_TYPE } from '../models/actions';
-import { IPoint } from '../models/track';
+import { IPoint, ITrack } from '../models/track';
 
-type ReducerState = {
+type ReducerState = ITrack & {
   recording: boolean;
-  name: string;
-  locations: Array<IPoint>;
   currentLocation: IPoint | null;
 };
 

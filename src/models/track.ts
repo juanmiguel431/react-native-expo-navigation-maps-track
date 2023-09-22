@@ -1,4 +1,8 @@
 
+export interface ITrack {
+  name: string;
+  locations: Array<IPoint>;
+}
 
 export interface IPoint {
   timestamp: number;

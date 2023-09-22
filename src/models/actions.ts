@@ -14,3 +14,8 @@ export const enum LOCATION_ACTION_TYPE {
   DeleteLocations = 'DeleteLocations',
   ChangeName = 'ChangeName',
 }
+
+export const enum TRACK_ACTION_TYPE {
+  FetchTracks= 'FetchTracks',
+  CreateTrack= 'CreateTrack',
+}
