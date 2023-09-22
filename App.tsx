@@ -23,8 +23,8 @@ LogBox.ignoreAllLogs();
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-const Tab = createBottomTabNavigator<RootStackParamList>();
-// const Tab = createMaterialBottomTabNavigator();
+// const Tab = createBottomTabNavigator<RootStackParamList>();
+const Tab = createMaterialBottomTabNavigator<RootStackParamList>();
 
 const TrackComp: React.FC = () => {
   return (
@@ -39,12 +39,12 @@ const MainFlow: React.FC = () => {
   return (
     <LocationProvider>
       <TrackProvider>
-        <Tab.Navigator initialRouteName={SCREEN.Tracks} screenOptions={{ tabBarHideOnKeyboard: true }}>
+        <Tab.Navigator initialRouteName={SCREEN.Tracks}>
           <Tab.Screen
             name={SCREEN.Tracks}
             component={TrackComp}
             options={{
-              headerShown: false,
+              // headerShown: false,
               tabBarIcon: ({ focused }) => {
                 return <FontAwesome5 name={focused ? 'th-list' : 'list'} />
               },
@@ -55,19 +55,21 @@ const MainFlow: React.FC = () => {
             component={TrackCreateScreen}
             options={{
               title: 'Create',
+              // headerShown: false,
               tabBarIcon: ({ focused }) => {
                 return <AntDesign name={focused ? 'pluscircle' : 'pluscircleo'} />
               },
-              headerShown: false }}
+
+          }}
           />
           <Tab.Screen
             name={SCREEN.Account}
             component={AccountScreen}
             options={{
-              headerShown: false,
+              // headerShown: false,
               tabBarIcon: ({ focused }) => {
                 return <FontAwesome name={focused ? 'user' : 'user-o'} />
-              },
+              }
             }}
           />
         </Tab.Navigator>
