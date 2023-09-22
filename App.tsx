@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, LogBox } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
@@ -17,6 +17,8 @@ import {
 import { RootStackParamList, SCREEN } from './src/models/screen';
 import { AuthContext, AuthProvider, LocationProvider, TrackProvider } from './src/context';
 import { navigationRef } from './src/RootNavigation';
+
+LogBox.ignoreAllLogs();
 
 const Stack = createStackNavigator<RootStackParamList>();
 
