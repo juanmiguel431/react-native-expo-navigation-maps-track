@@ -13,6 +13,7 @@ export const enum LOCATION_ACTION_TYPE {
   AddLocation = 'AddLocation',
   DeleteLocations = 'DeleteLocations',
   ChangeName = 'ChangeName',
+  ClearForm = 'ClearForm',
 }
 
 export const enum TRACKER_ACTION_TYPE {
