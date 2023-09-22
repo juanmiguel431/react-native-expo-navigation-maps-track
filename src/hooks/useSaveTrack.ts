@@ -1,5 +1,7 @@
 import { useCallback, useContext } from 'react';
 import { TrackContext, LocationContext } from '../context';
+import { navigationRef } from '../RootNavigation';
+import { SCREEN } from '../models/screen';
 
 export const useSaveTrack = (): [() => Promise<void>, boolean] => {
   const { createTrack, state: {loading} } = useContext(TrackContext);
@@ -8,6 +10,7 @@ export const useSaveTrack = (): [() => Promise<void>, boolean] => {
   const saveTrack = useCallback(async () => {
     await createTrack({ name: name, locations: locations });
     clearForm();
+    navigationRef.navigate(SCREEN.TrackList);
   }, [name, locations, createTrack, clearForm])
 
   return [saveTrack, loading];
