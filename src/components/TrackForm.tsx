@@ -51,7 +51,7 @@ export const TrackForm: React.FC = () => {
               <Button title="Delete" color="secondary" onPress={toggleDialog}/>
             </View>
             <View style={styles.button}>
-              <Button title="Save" onPress={saveTrack} disabled={isLoading}/>
+              <Button title="Save" onPress={saveTrack} disabled={isLoading || !name}/>
             </View>
           </View>
         </Spacer>
