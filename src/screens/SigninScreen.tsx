@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SCREEN, SigninScreenProps } from '../models/screen';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../context';
 import { AuthForm, NavLink } from '../components';
-import useClearErrorMessage from '../hooks/useClearErrorMessage';
+import { useClearErrorMessage } from '../hooks';
 
 export const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
   const { state, signIn } = useContext(AuthContext);

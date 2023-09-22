@@ -1,9 +1,9 @@
 // import '../_mockLocation';
 import React, { useCallback, useContext } from 'react';
-import { LocationContext } from '../context/LocationContext';
+import { LocationContext } from '../context';
 import Map from './Map';
 import { IPoint } from '../models/track';
-import useLocation from '../hooks/useLocation';
+import { useLocation } from '../hooks';
 import { Text } from '@rneui/themed';
 import { ActivityIndicator } from 'react-native-paper';
 import { StyleSheet } from 'react-native';

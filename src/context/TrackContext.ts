@@ -4,13 +4,14 @@ import { TRACK_ACTION_TYPE } from '../models/actions';
 import { ITrack } from '../models/track';
 
 type ReducerState = {
+  loading: boolean;
   tracks: ITrack[];
 };
 
 type ReducerAction = FetchTracksAction | CreateTracksAction;
 
 type FetchTracksAction = { type: TRACK_ACTION_TYPE.FetchTracks; };
-type CreateTracksAction = { type: TRACK_ACTION_TYPE.CreateTrack; };
+type CreateTracksAction = { type: TRACK_ACTION_TYPE.CreateTrack; payload: ITrack };
 
 const trackReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   switch (action.type) {
@@ -27,8 +28,8 @@ const fetchTracks = (dispatch: Dispatch<ReducerAction>) => () => {
   dispatch({ type: TRACK_ACTION_TYPE.FetchTracks });
 };
 
-const createTrack = (dispatch: Dispatch<ReducerAction>) => () => {
-  dispatch({ type: TRACK_ACTION_TYPE.CreateTrack });
+const createTrack = (dispatch: Dispatch<ReducerAction>) => async (track: ITrack) => {
+  dispatch({ type: TRACK_ACTION_TYPE.CreateTrack, payload: track });
 };
 
 const actions = {
@@ -37,6 +38,7 @@ const actions = {
 
 
 const initialState: ReducerState = {
+  loading: false,
   tracks: [],
 };
 

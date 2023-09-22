@@ -2,11 +2,14 @@ import React, { useCallback, useContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Dialog, Input, Text } from '@rneui/themed';
 import Spacer from './Spacer';
-import { LocationContext } from '../context/LocationContext';
+import { LocationContext } from '../context';
+import { useSaveTrack } from '../hooks';
 
 export const TrackForm: React.FC = () => {
   const [showDialog, setShowDialog] = useState(false);
   const { state: { recording, name, locations }, toggleRecording, changeName, deleteLocations } = useContext(LocationContext);
+
+  const [saveTrack, isLoading] = useSaveTrack();
 
   const configButton = recording ? {
     title: 'Stop Recording',
@@ -48,7 +51,7 @@ export const TrackForm: React.FC = () => {
               <Button title="Delete" color="secondary" onPress={toggleDialog}/>
             </View>
             <View style={styles.button}>
-              <Button title="Save"/>
+              <Button title="Save" onPress={saveTrack} disabled={isLoading}/>
             </View>
           </View>
         </Spacer>
