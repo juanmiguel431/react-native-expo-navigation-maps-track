@@ -1,5 +1,6 @@
 
 export interface ITrack {
+  _id: string;
   name: string;
   locations: Array<IPoint>;
 }

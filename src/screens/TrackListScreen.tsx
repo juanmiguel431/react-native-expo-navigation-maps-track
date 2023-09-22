@@ -1,17 +1,36 @@
-import React, { useContext } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import React, { useCallback, useContext } from 'react';
+import { View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { ListItem } from '@rneui/themed';
 import { SCREEN, TrackListScreenProps } from '../models/screen';
-import { LocationContext } from '../context/LocationContext';
+import { TrackContext } from '../context';
 
 export const TrackListScreen: React.FC<TrackListScreenProps> = ({ navigation }) => {
-  const { state } = useContext(LocationContext);
+  const { state: { tracks }, fetchTracks } = useContext(TrackContext);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchTracks();
+    }, [fetchTracks]))
 
   return (
     <View>
-      <Text style={{ fontSize: 48 }}>TrackListScreen</Text>
-      <Text style={{ fontSize: 20 }}>Locations: {state.locations.length}</Text>
-
-      <Button title="Go to Track Details" onPress={() => navigation.navigate(SCREEN.TrackDetail)}/>
+      <FlatList
+        data={tracks}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity onPress={() => navigation.navigate(SCREEN.TrackDetail)}>
+              <ListItem>
+                <ListItem.Content>
+                  <ListItem.Title>{item.name}</ListItem.Title>
+                </ListItem.Content>
+                <ListItem.Chevron/>
+              </ListItem>
+            </TouchableOpacity>
+          );
+        }}
+      />
     </View>
   );
 }

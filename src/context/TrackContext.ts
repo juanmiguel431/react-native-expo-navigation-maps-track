@@ -13,7 +13,7 @@ type ReducerState = {
 
 type ReducerAction = FetchTracksAction | CreateTracksAction | SetLoadingAction | SetErrorMessageAction;
 
-type FetchTracksAction = { type: TRACKER_ACTION_TYPE.FetchTracks; };
+type FetchTracksAction = { type: TRACKER_ACTION_TYPE.FetchTracks; payload: ITrack[] };
 type CreateTracksAction = { type: TRACKER_ACTION_TYPE.CreateTrack; payload: ITrack };
 type SetLoadingAction = { type: TRACKER_ACTION_TYPE.SetLoading; payload: boolean };
 type SetErrorMessageAction = { type: TRACKER_ACTION_TYPE.SetError; payload: string };
@@ -25,7 +25,7 @@ const trackReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
     case TRACKER_ACTION_TYPE.SetError:
       return { ...state, errorMessage: action.payload };
     case TRACKER_ACTION_TYPE.FetchTracks:
-      return { ...state };
+      return { ...state, tracks: action.payload };
     case TRACKER_ACTION_TYPE.CreateTrack:
       return { ...state, tracks: [...state.tracks, action.payload] };
     default:
@@ -33,8 +33,24 @@ const trackReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   }
 };
 
-const fetchTracks = (dispatch: Dispatch<ReducerAction>) => () => {
-  dispatch({ type: TRACKER_ACTION_TYPE.FetchTracks });
+const fetchTracks = (dispatch: Dispatch<ReducerAction>) => async () => {
+  try {
+    dispatch({ type: TRACKER_ACTION_TYPE.SetLoading, payload: true });
+
+    const response = await trackerApi.get<ITrack[]>('/tracks');
+
+    dispatch({ type: TRACKER_ACTION_TYPE.FetchTracks, payload: response.data });
+  } catch (err) {
+    if (err instanceof AxiosError) {
+      const errorMessage: string = err.response?.data?.error;
+      console.log(errorMessage );
+      dispatch({ type: TRACKER_ACTION_TYPE.SetError, payload: errorMessage });
+    } else if (err instanceof Error) {
+      dispatch({ type: TRACKER_ACTION_TYPE.SetError, payload: err.message });
+    }
+  } finally {
+    dispatch({ type: TRACKER_ACTION_TYPE.SetLoading, payload: false });
+  }
 };
 
 const createTrack = (dispatch: Dispatch<ReducerAction>) => async (track: ITrack) => {
