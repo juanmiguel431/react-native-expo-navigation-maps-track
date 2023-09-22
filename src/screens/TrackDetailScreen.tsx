@@ -3,11 +3,13 @@ import { View, Text, StyleSheet } from 'react-native';
 import { TrackDetailScreenProps } from '../models/screen';
 import { TrackContext } from '../context';
 import { useFocusEffect } from '@react-navigation/native';
+import Map from '../components/Map';
+import { ActivityIndicator } from 'react-native-paper';
 
 export const TrackDetailScreen: React.FC<TrackDetailScreenProps> = ({ navigation, route }) => {
   const id = route.params.id;
 
-  const { state: { tracks }, fetchTrackById } = useContext(TrackContext);
+  const { state: { tracks, loading }, fetchTrackById } = useContext(TrackContext);
 
   useFocusEffect(
     useCallback(() => {
@@ -16,13 +18,30 @@ export const TrackDetailScreen: React.FC<TrackDetailScreenProps> = ({ navigation
 
   const track = tracks.find(t => t._id === id);
 
+  const region = track?.locations[0].coords;
+
   return (
     <View>
-      <Text style={{ fontSize: 48 }}>{track?.name}</Text>
+      <Text style={styles.title}>{track?.name}</Text>
+      {loading ? (
+        <ActivityIndicator size="large" style={styles.activityIndicator}/>
+      ) : region && (
+        <Map
+          initialRegion={track?.locations[0].coords}
+          locations={track?.locations.map(p => p.coords)}
+        />
+      )}
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  activityIndicator: {
+    marginTop: 100
+  },
+  title: {
+    fontSize: 40
+  }
+});
 
 export default TrackDetailScreen;

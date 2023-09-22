@@ -26,7 +26,8 @@ export const TrackLocationMap: React.FC<TrackLocationMapProps> = ({ isFocused })
     <>
       {currentLocation ? (
         <Map
-          coords={currentLocation.coords}
+          initialRegion={currentLocation.coords}
+          currentLocation={currentLocation.coords}
           locations={locations.map(p => p.coords)}
         />
       ) : (
