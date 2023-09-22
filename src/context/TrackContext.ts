@@ -1,36 +1,60 @@
 import createDataContext from './createDataContext';
 import { Dispatch, Reducer } from 'react';
-import { TRACK_ACTION_TYPE } from '../models/actions';
+import { TRACKER_ACTION_TYPE } from '../models/actions';
 import { ITrack } from '../models/track';
 import { trackerApi } from '../apis';
+import { AxiosError } from 'axios';
 
 type ReducerState = {
+  errorMessage: string;
   loading: boolean;
   tracks: ITrack[];
 };
 
-type ReducerAction = FetchTracksAction | CreateTracksAction;
+type ReducerAction = FetchTracksAction | CreateTracksAction | SetLoadingAction | SetErrorMessageAction;
 
-type FetchTracksAction = { type: TRACK_ACTION_TYPE.FetchTracks; };
-type CreateTracksAction = { type: TRACK_ACTION_TYPE.CreateTrack; payload: ITrack };
+type FetchTracksAction = { type: TRACKER_ACTION_TYPE.FetchTracks; };
+type CreateTracksAction = { type: TRACKER_ACTION_TYPE.CreateTrack; payload: ITrack };
+type SetLoadingAction = { type: TRACKER_ACTION_TYPE.SetLoading; payload: boolean };
+type SetErrorMessageAction = { type: TRACKER_ACTION_TYPE.SetError; payload: string };
 
 const trackReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   switch (action.type) {
-    case TRACK_ACTION_TYPE.FetchTracks:
+    case TRACKER_ACTION_TYPE.SetLoading:
+      return { ...state, loading: action.payload };
+    case TRACKER_ACTION_TYPE.SetError:
+      return { ...state, errorMessage: action.payload };
+    case TRACKER_ACTION_TYPE.FetchTracks:
       return { ...state };
-    case TRACK_ACTION_TYPE.CreateTrack:
-      return { ...state };
+    case TRACKER_ACTION_TYPE.CreateTrack:
+      return { ...state, tracks: [...state.tracks, action.payload] };
     default:
       return state;
   }
 };
 
 const fetchTracks = (dispatch: Dispatch<ReducerAction>) => () => {
-  dispatch({ type: TRACK_ACTION_TYPE.FetchTracks });
+  dispatch({ type: TRACKER_ACTION_TYPE.FetchTracks });
 };
 
 const createTrack = (dispatch: Dispatch<ReducerAction>) => async (track: ITrack) => {
-  dispatch({ type: TRACK_ACTION_TYPE.CreateTrack, payload: track });
+  try {
+    dispatch({ type: TRACKER_ACTION_TYPE.SetLoading, payload: true });
+
+    await trackerApi.post('/tracks', track);
+
+    dispatch({ type: TRACKER_ACTION_TYPE.CreateTrack, payload: track });
+  } catch (err) {
+    if (err instanceof AxiosError) {
+      const errorMessage: string = err.response?.data?.error;
+      console.log(errorMessage );
+      dispatch({ type: TRACKER_ACTION_TYPE.SetError, payload: errorMessage });
+    } else if (err instanceof Error) {
+      dispatch({ type: TRACKER_ACTION_TYPE.SetError, payload: err.message });
+    }
+  } finally {
+    dispatch({ type: TRACKER_ACTION_TYPE.SetLoading, payload: false });
+  }
 };
 
 const actions = {
@@ -39,6 +63,7 @@ const actions = {
 
 
 const initialState: ReducerState = {
+  errorMessage: '',
   loading: false,
   tracks: [],
 };

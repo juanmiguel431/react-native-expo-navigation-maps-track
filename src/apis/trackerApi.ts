@@ -11,7 +11,7 @@ export const trackerApi = axios.create({
 
 trackerApi.interceptors.request.use(
   async (config) => {
-    const token = getItemAsync(deviceStorage.Token);
+    const token = await getItemAsync(deviceStorage.Token);
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

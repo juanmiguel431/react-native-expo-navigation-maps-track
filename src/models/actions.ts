@@ -15,7 +15,9 @@ export const enum LOCATION_ACTION_TYPE {
   ChangeName = 'ChangeName',
 }
 
-export const enum TRACK_ACTION_TYPE {
+export const enum TRACKER_ACTION_TYPE {
   FetchTracks= 'FetchTracks',
   CreateTrack= 'CreateTrack',
+  SetLoading = 'SetLoading',
+  SetError = 'SetError',
 }
