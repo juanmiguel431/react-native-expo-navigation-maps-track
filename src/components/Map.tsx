@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import MapView, { Polyline, Circle } from 'react-native-maps';
+import MapView, { Polyline, Circle, PROVIDER_GOOGLE } from 'react-native-maps';
 import { ICoordinate } from '../models/track';
 
 type MapProps = {
@@ -12,6 +12,7 @@ export const Map: React.FC<MapProps> = ({ coords, locations}) => {
 
   return (
     <MapView
+      provider={PROVIDER_GOOGLE}
       style={styles.map}
       initialRegion={{
         ...coords,
