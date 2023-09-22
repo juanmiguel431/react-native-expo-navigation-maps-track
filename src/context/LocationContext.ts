@@ -1,9 +1,9 @@
 import { Dispatch, Reducer } from 'react';
 import createDataContext from './createDataContext';
 import { LOCATION_ACTION_TYPE } from '../models/actions';
-import { IPoint, ITrack } from '../models/track';
+import { IPoint, ITrackCreate } from '../models/track';
 
-type ReducerState = ITrack & {
+type ReducerState = ITrackCreate & {
   recording: boolean;
   currentLocation: IPoint | null;
 };

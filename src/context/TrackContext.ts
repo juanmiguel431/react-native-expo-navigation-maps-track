@@ -1,7 +1,7 @@
 import createDataContext from './createDataContext';
 import { Dispatch, Reducer } from 'react';
 import { TRACKER_ACTION_TYPE } from '../models/actions';
-import { ITrack } from '../models/track';
+import { ITrack, ITrackCreate } from '../models/track';
 import { trackerApi } from '../apis';
 import { AxiosError } from 'axios';
 
@@ -79,13 +79,13 @@ const fetchTrackById = (dispatch: Dispatch<ReducerAction>) => async (id: string)
   }
 };
 
-const createTrack = (dispatch: Dispatch<ReducerAction>) => async (track: ITrack) => {
+const createTrack = (dispatch: Dispatch<ReducerAction>) => async (track: ITrackCreate) => {
   try {
     dispatch({ type: TRACKER_ACTION_TYPE.SetLoading, payload: true });
 
-    await trackerApi.post('/tracks', track);
+    const response = await trackerApi.post<ITrack>('/tracks', track);
 
-    dispatch({ type: TRACKER_ACTION_TYPE.CreateTrack, payload: track });
+    dispatch({ type: TRACKER_ACTION_TYPE.CreateTrack, payload: response.data });
   } catch (err) {
     if (err instanceof AxiosError) {
       const errorMessage: string = err.response?.data?.error;

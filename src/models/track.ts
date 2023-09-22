@@ -5,6 +5,11 @@ export interface ITrack {
   locations: Array<IPoint>;
 }
 
+export interface ITrackCreate {
+  name: string;
+  locations: Array<IPoint>;
+}
+
 export interface IPoint {
   timestamp: number;
   coords: ICoordinate
