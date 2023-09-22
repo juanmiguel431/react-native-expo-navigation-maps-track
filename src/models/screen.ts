@@ -29,7 +29,7 @@ export type RootStackParamList = {
   [SCREEN.Signin]: undefined;
   [SCREEN.Signup]: undefined;
   [SCREEN.TrackCreate]: undefined;
-  [SCREEN.TrackDetail]: undefined;
+  [SCREEN.TrackDetail]: { id: string };
   [SCREEN.TrackList]: undefined;
   [SCREEN.Tracks]: undefined;
   [SCREEN.MainFlow]: undefined;

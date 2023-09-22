@@ -14,13 +14,15 @@ export const TrackListScreen: React.FC<TrackListScreenProps> = ({ navigation }) 
     }, [fetchTracks]))
 
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
         data={tracks}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity onPress={() => navigation.navigate(SCREEN.TrackDetail)}>
+            <TouchableOpacity onPress={() => {
+              navigation.navigate(SCREEN.TrackDetail, { id: item._id })}
+            }>
               <ListItem>
                 <ListItem.Content>
                   <ListItem.Title>{item.name}</ListItem.Title>
@@ -33,8 +35,14 @@ export const TrackListScreen: React.FC<TrackListScreenProps> = ({ navigation }) 
       />
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    display: 'flex',
+    flex: 1
+  }
+});
 
 export default TrackListScreen;

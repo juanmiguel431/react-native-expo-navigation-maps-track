@@ -18,6 +18,7 @@ export const enum LOCATION_ACTION_TYPE {
 
 export const enum TRACKER_ACTION_TYPE {
   FetchTracks= 'FetchTracks',
+  FetchTrackById= 'FetchTrackById',
   CreateTrack= 'CreateTrack',
   SetLoading = 'SetLoading',
   SetError = 'SetError',
