@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
@@ -15,8 +15,7 @@ import {
   ResolveAuthScreen
 } from './src/screens';
 import { RootStackParamList, SCREEN } from './src/models/screen';
-import { AuthContext, AuthProvider } from './src/context/AuthContext';
-import { LocationProvider } from './src/context/LocationContext';
+import { AuthContext, AuthProvider, LocationProvider, TrackProvider } from './src/context';
 import { navigationRef } from './src/RootNavigation';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -36,11 +35,25 @@ const TrackComp: React.FC = () => {
 const MainFlow: React.FC = () => {
   return (
     <LocationProvider>
-      <Tab.Navigator initialRouteName={SCREEN.Tracks} screenOptions={{ tabBarHideOnKeyboard: true }}  >
-        <Tab.Screen name={SCREEN.Tracks} component={TrackComp} options={{ headerShown: false }}/>
-        <Tab.Screen name={SCREEN.TrackCreate} component={TrackCreateScreen} options={{ title: 'Create', headerShown: false }}/>
-        <Tab.Screen name={SCREEN.Account} component={AccountScreen} options={{ headerShown: false }}/>
-      </Tab.Navigator>
+      <TrackProvider>
+        <Tab.Navigator initialRouteName={SCREEN.Tracks} screenOptions={{ tabBarHideOnKeyboard: true }}>
+          <Tab.Screen
+            name={SCREEN.Tracks}
+            component={TrackComp}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name={SCREEN.TrackCreate}
+            component={TrackCreateScreen}
+            options={{ title: 'Create', headerShown: false }}
+          />
+          <Tab.Screen
+            name={SCREEN.Account}
+            component={AccountScreen}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
+      </TrackProvider>
     </LocationProvider>
   )
 };
