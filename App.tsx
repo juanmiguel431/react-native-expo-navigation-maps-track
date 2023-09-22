@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, LogBox } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { AntDesign, FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import {
   AccountScreen,
@@ -42,17 +43,32 @@ const MainFlow: React.FC = () => {
           <Tab.Screen
             name={SCREEN.Tracks}
             component={TrackComp}
-            options={{ headerShown: false }}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({ focused }) => {
+                return <FontAwesome5 name={focused ? 'th-list' : 'list'} />
+              },
+            }}
           />
           <Tab.Screen
             name={SCREEN.TrackCreate}
             component={TrackCreateScreen}
-            options={{ title: 'Create', headerShown: false }}
+            options={{
+              title: 'Create',
+              tabBarIcon: ({ focused }) => {
+                return <AntDesign name={focused ? 'pluscircle' : 'pluscircleo'} />
+              },
+              headerShown: false }}
           />
           <Tab.Screen
             name={SCREEN.Account}
             component={AccountScreen}
-            options={{ headerShown: false }}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({ focused }) => {
+                return <FontAwesome name={focused ? 'user' : 'user-o'} />
+              },
+            }}
           />
         </Tab.Navigator>
       </TrackProvider>
