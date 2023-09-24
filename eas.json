@@ -1,0 +1,12 @@
+{
+  "build": {
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_NGROK_TRACK_SERVER_API": "https://66d8-186-6-126-137.ngrok-free.app"
+      }
+    }
+  }
+}

@@ -18,13 +18,25 @@
       "supportsTablet": true
     },
     "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyByoTHo1Mqx1gOILngmBW7DdcgWdxdzyiI"
+        }
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.juanmiguel431.tracks"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8933e062-594f-4a1a-8198-ca1124276577"
+      }
+    },
+    "owner": "juanmiguel431"
   }
 }
